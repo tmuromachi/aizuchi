@@ -6,9 +6,10 @@ RUN apt-get install -y portaudio19-dev build-essential libssl-dev libffi-dev pyt
 
 # src move
 # RUN mkdir -p /usr/src/script/rt-backchannel
-COPY ./ /usr/src/script/rt-backchannel
-WORKDIR /usr/src/script/rt-backchannel
+# COPY ./ /usr/src/script/rt-backchannel
+# WORKDIR /usr/src/script/rt-backchannel
+COPY ./requirements.txt /requirements.txt
 
-RUN pip install -r requirements.txt
+RUN pip install -r /requirements.txt
 
 # CMD python realtime-stt.py

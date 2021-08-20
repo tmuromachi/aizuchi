@@ -1,10 +1,11 @@
 # RealTime-backchannel
 ### 動作環境  
+一部のライブラリ等を使用する際に面倒なことが起きる可能性が高いため、
+基本的にはDockerで環境構築することを想定しています。
+
 Ubuntu(おすすめ)  
 mac  
 Windows(Docker+音声入出力を使用するため、ProかVMが必要。かなり厳しそう)
-
-Docker
 
 python 3.7.9
 

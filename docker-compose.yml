@@ -19,5 +19,6 @@ services:    # サービスを定義する項目
        GOOGLE_APPLICATION_CREDENTIALS: /key.json
     volumes:
       - ${GCP_KEY_PLACE}:/key.json:ro
+      - ./:/usr/src/script/rt-backchannel/
     devices:
       - /dev/snd
