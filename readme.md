@@ -15,7 +15,7 @@ https://docs.docker.com/engine/install/ubuntu/
 ----
 ### Docker(docker-compose)で実行環境の構築
 ビルド  
-認証用jsonファイルをconfig以下に設置する  
+認証用jsonファイルをconfig以下などに設置する(git管理されないところに設置する)  
 テストに使用する場合は以下からjsonファイルをダウンロードして設置する  
 https://drive.google.com/file/d/1YdM0fyfs0dOjdlwAUWG0GxiWgKjMsgGU/view?usp=sharing  
 - 長時間使用すると室町が課金する羽目になるのであくまでテストに使用してください。 
@@ -23,7 +23,7 @@ https://drive.google.com/file/d/1YdM0fyfs0dOjdlwAUWG0GxiWgKjMsgGU/view?usp=shari
 - .configは.gitignoreに追加してあるので大丈夫だと思いますが、取扱には気をつけてください。  
 
 その他の方法  
-./.envに認証に使用するjsonファイルのパスを記載する  
+./.envに認証に使用するjsonファイルのパスを記載する(絶対パス)  
 または以下の通り  
 `export GOOGLE_APPLICATION_CREDENTIALS=/home/toshiki/data/cloud/gcp/tmuromachi-ed1cc8e5a9ae.json`
 
@@ -35,9 +35,7 @@ https://drive.google.com/file/d/1YdM0fyfs0dOjdlwAUWG0GxiWgKjMsgGU/view?usp=shari
 コンテナ内に入る  
 `docker exec -it rt-backchanel /bin/bash`  
 
-`cd src`
-`python google-stt.py`
-
+`source run.sh`
 ---
 ### pyaudioのインストールで詰んだ時の対処法(Dockerを使用しない場合)  
 https://qiita.com/musaprg/items/34c4c1e0e9eb8e8cc5a1  
