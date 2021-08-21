@@ -1,6 +1,6 @@
 # RealTime-backchannel
 ### 動作環境  
-一部のライブラリ等を使用する際に面倒なことが起きる可能性が高いため、
+一部の音声系ライブラリを使用する際に面倒なことが起きる可能性が高いため、
 基本的にはDockerで環境構築することを想定しています。
 
 Ubuntu(おすすめ)  
@@ -35,8 +35,9 @@ https://drive.google.com/file/d/1YdM0fyfs0dOjdlwAUWG0GxiWgKjMsgGU/view?usp=shari
 
 コンテナ内に入る  
 `docker exec -it rt-backchanel /bin/bash`  
-
+リアルタイム相槌実行  
 `source run.sh`
+
 ---
 ### pyaudioのインストールで詰んだ時の対処法(Dockerを使用しない場合)  
 https://qiita.com/musaprg/items/34c4c1e0e9eb8e8cc5a1  

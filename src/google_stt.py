@@ -8,6 +8,7 @@ from google.cloud import speech
 
 import pyaudio
 from six.moves import queue
+from knp import knp_parser
 
 # GCP認証情報
 # os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/home/toshiki/data/cloud/gcp/tmuromachi-ed1cc8e5a9ae.json'
@@ -156,6 +157,7 @@ def listen_print_loop(responses):
         # 逐次予測の場合は結果が確定していない段階で表示する
         if SEQUENTIAL:
             print(transcript)
+            knp_parser(transcript)
         else:
             if not result.is_final:
                 sys.stdout.write(transcript + overwrite_chars + "\r")

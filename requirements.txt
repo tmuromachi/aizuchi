@@ -6,3 +6,4 @@ PyAudio~=0.2.11
 pyqtgraph~=0.12.1
 six~=1.16.0
 google-cloud-speech
+pyknp

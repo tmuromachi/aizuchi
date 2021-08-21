@@ -11,7 +11,7 @@ services:    # サービスを定義する項目
     # tty: trueと記述すると、docker-compose up でコンテナを起動させた際に、
     #      コンテナがすぐに終了してしまうのを防ぐことができます。
     tty: true
-    working_dir: /usr/src/script/rt-backchannel
+    working_dir: /usr/script/rt-backchannel
 
     env_file:
       - ./.env
@@ -19,6 +19,6 @@ services:    # サービスを定義する項目
        GOOGLE_APPLICATION_CREDENTIALS: /key.json
     volumes:
       - ${GCP_KEY_PLACE}:/key.json:ro
-      - ./:/usr/src/script/rt-backchannel/
+      - ./:/usr/script/rt-backchannel/
     devices:
       - /dev/snd

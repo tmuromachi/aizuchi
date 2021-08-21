@@ -25,4 +25,4 @@
 #   echo GOOGLE_APPLICATION_CREDENTIALS=./config/tmuromachi-ed1cc8e5a9ae.json
 # fi
 
-python ./src/google_stt.py
+python /usr/script/rt-backchannel/src/google_stt.py
