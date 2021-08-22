@@ -23,6 +23,7 @@ def knp_parser(text):
     is_absolute_boundary(final_mrph)
     is_strong_boundary(final_mrph)
     is_week_boundary(final_mrph)
+    is_special_mrph(mrph_list)
     # print("==========")
 
 
@@ -102,3 +103,13 @@ def is_week_boundary(mrph):
     #    print("【弱境界】感動詞：", mrph.midasi)
     # elif mrph.hinsi == "接続詞":
     #     print("【弱境界】接続詞：", mrph.midasi)
+
+
+def is_special_mrph(mrph_list):
+    """JUMAN++で解析できない特殊な単語を調べる"""
+    text = ""
+    for mrph in mrph_list[-5:]:    # スライスだとIndex Error起きない
+        text = text + mrph.midasi
+
+    if "じゃん" in text:
+        print("助詞 終助詞 ~じゃん")
