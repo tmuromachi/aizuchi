@@ -17,13 +17,13 @@ def knp_parser(text):
     #     print("見出し:%s, 読み:%s, 原形:%s, 品詞:%s, 品詞細分類:%s, 活用型:%s, 活用形:%s, 意味情報:%s, 代表表記:%s" \
     #           % (mrph.midasi, mrph.yomi, mrph.genkei, mrph.hinsi, mrph.bunrui, mrph.katuyou1, mrph.katuyou2, mrph.imis,
     #              mrph.repname))
-    print("--")
-    print(mrph_list[-1].midasi, mrph_list[-1].hinsi)
+    # print("--")
+    # print(mrph_list[-1].midasi, mrph_list[-1].hinsi)
     final_mrph = mrph_list[-1]
     is_absolute_boundary(final_mrph)
     is_strong_boundary(final_mrph)
     is_week_boundary(final_mrph)
-    print("==========")
+    # print("==========")
 
 
 def is_absolute_boundary(mrph):
@@ -34,7 +34,7 @@ def is_absolute_boundary(mrph):
 
 def is_strong_boundary(mrph):
     """強境界について調べる"""
-    if mrph.midasi == "が":
+    if mrph.midasi == "が" and mrph.hinsi == "助詞":
         print("【強境界】並列節ガ：", mrph.midasi)
     elif mrph.midasi == "けど":
         print("【強境界】並列節ケド：", mrph.midasi)
@@ -44,64 +44,64 @@ def is_strong_boundary(mrph):
         print("【強境界】並列節ケレド：", mrph.midasi)
     elif mrph.midasi == "けれども":
         print("【強境界】並列節ケレドモ：", mrph.midasi)
-    elif mrph.midasi == "し":
+    elif mrph.midasi == "し" and mrph.hinsi == "助詞":
         print("【強境界】並列節シ：", mrph.midasi)
 
 
 def is_week_boundary(mrph):
     """弱境界について調べる"""
     # 弱境界
-    if mrph.midasi == "たり":
+    if mrph.midasi == "たり" and mrph.hinsi == "助詞":
         print("【弱境界】タリ節：", mrph.midasi)
-    elif mrph.midasi == "てから":
+    elif mrph.midasi == "てから" and mrph.hinsi == "助詞":
         print("【弱境界】テカラ節：", mrph.midasi)
-    elif mrph.midasi == "ては":
+    elif mrph.midasi == "ては" and mrph.hinsi == "助詞":
         print("【弱境界】テハ節：", mrph.midasi)
-    elif mrph.midasi == "ても":
+    elif mrph.midasi == "ても" and mrph.hinsi == "助詞":
         print("【弱境界】テモ節：", mrph.midasi)
-    elif mrph.midasi == "て":
+    elif mrph.midasi == "て" and mrph.hinsi == "助詞":
         print("【弱境界】テ節：", mrph.midasi)
-    elif mrph.midasi == "という":
+    elif mrph.midasi == "という" and mrph.hinsi == "助詞":
         print("【弱境界】トイウ節：", mrph.midasi)
-    elif mrph.midasi == "とか":
+    elif mrph.midasi == "とか" and mrph.hinsi == "助詞":
         print("【弱境界】トカ節：", mrph.midasi)
-    elif mrph.midasi == "のに":
+    elif mrph.midasi == "のに" and mrph.hinsi == "助詞":
         print("【弱境界】ノニ節：", mrph.midasi)
-    elif mrph.midasi == "ように":
+    elif mrph.midasi == "ように" and mrph.hinsi == "助詞":
         print("【弱境界】ヨウニ節：", mrph.midasi)
-    elif mrph.midasi == "との":
+    elif mrph.midasi == "との" and mrph.hinsi == "助詞":
         print("【弱境界】引用節トノ：", mrph.midasi)
-    elif mrph.midasi == "たら":
+    elif mrph.midasi == "たら" and mrph.hinsi == "助詞":
         print("【弱境界】条件節タラ：", mrph.midasi)
-    elif mrph.midasi == "たらば":
+    elif mrph.midasi == "たらば" and mrph.hinsi == "助詞":
         print("【弱境界】引用節タラバ：", mrph.midasi)
-    elif mrph.midasi == "と":
+    elif mrph.midasi == "と" and mrph.hinsi == "助詞":
         print("【弱境界】条件節ト：", mrph.midasi)
-    elif mrph.midasi == "なら":
+    elif mrph.midasi == "なら" and mrph.hinsi == "助詞":
         print("【弱境界】条件節ナラ：", mrph.midasi)
-    elif mrph.midasi == "ならば":
+    elif mrph.midasi == "ならば" and mrph.hinsi == "助詞":
         print("【弱境界】条件節ナラバ：", mrph.midasi)
-    elif mrph.midasi == "れば":
+    elif mrph.midasi == "れば" and mrph.hinsi == "助詞":
         print("【弱境界】条件節レバ：", mrph.midasi)
-    elif mrph.midasi == "だの":
+    elif mrph.midasi == "だの" and mrph.hinsi == "助詞":
         print("【弱境界】並列節ダノ：", mrph.midasi)
-    elif mrph.midasi == "で":
+    elif mrph.midasi == "で" and mrph.hinsi == "助詞":
         print("【弱境界】条件節デ：", mrph.midasi)
-    elif mrph.midasi == "なり":
+    elif mrph.midasi == "なり" and mrph.hinsi == "助詞":
         print("【弱境界】並列節ナリ：", mrph.midasi)
-    elif mrph.midasi == "から":
+    elif mrph.midasi == "から" and mrph.hinsi == "助詞":
         print("【弱境界】理由節カラ：", mrph.midasi)
-    elif mrph.midasi == "からには":
+    elif mrph.midasi == "からには" and mrph.hinsi == "助詞":
         print("【弱境界】理由節カラニハ：", mrph.midasi)
-    elif mrph.midasi == "ので":
+    elif mrph.midasi == "ので" and mrph.hinsi == "助詞":
         print("【弱境界】理由節ノデ：", mrph.midasi)
-    elif mrph.midasi == "ての":
+    elif mrph.midasi == "ての" and mrph.hinsi == "助詞":
         print("【弱境界】並列節テノ：", mrph.midasi)
 
-    elif mrph.hinsi == "感動詞":
-        print("【弱境界】感動詞：", mrph.midasi)
-    elif mrph.hinsi == "接続詞":
-        print("【弱境界】接続詞：", mrph.midasi)
+    # elif mrph.hinsi == "感動詞":
+    #    print("【弱境界】感動詞：", mrph.midasi)
+    # elif mrph.hinsi == "接続詞":
+    #     print("【弱境界】接続詞：", mrph.midasi)
 
 
 """
