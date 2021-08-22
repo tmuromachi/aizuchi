@@ -1,5 +1,4 @@
 from pyknp import Juman
-from features import Features
 
 
 def knp_parser(text):
@@ -12,24 +11,18 @@ def knp_parser(text):
     text = text.replace(' ', '　')  # KNP用に半角スペースを全角へ
     result = jumanpp.analysis(text)
     mrph_list = result.mrph_list()
-    # print("--")
-    # for mrph in mrph_list:  # 各形態素にアクセス
-    #     print("見出し:%s, 読み:%s, 原形:%s, 品詞:%s, 品詞細分類:%s, 活用型:%s, 活用形:%s, 意味情報:%s, 代表表記:%s" \
-    #           % (mrph.midasi, mrph.yomi, mrph.genkei, mrph.hinsi, mrph.bunrui, mrph.katuyou1, mrph.katuyou2, mrph.imis,
-    #              mrph.repname))
-    # print("--")
-    # print(mrph_list[-1].midasi, mrph_list[-1].hinsi)
+    # "見出し:%s, 読み:%s, 原形:%s, 品詞:%s, 品詞細分類:%s, 活用型:%s, 活用形:%s, 意味情報:%s, 代表表記:%s"
+    # mrph.midasi,mrph.yomi,mrph.genkei,mrph.hinsi,mrph.bunrui,mrph.katuyou1,mrph.katuyou2,mrph.imis,mrph.repname
     final_mrph = mrph_list[-1]
     is_absolute_boundary(final_mrph)
     is_strong_boundary(final_mrph)
     is_week_boundary(final_mrph)
     is_special_mrph(mrph_list)
-    # print("==========")
 
 
 def is_absolute_boundary(mrph):
     """絶対境界について調べる"""
-    if mrph.hinsi == "終助詞":
+    if mrph.bunrui == "終助詞":
         print("【絶対境界】文末候補：終助詞：", mrph.midasi)
 
 
