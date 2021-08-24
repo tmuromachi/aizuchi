@@ -7,3 +7,5 @@ pyqtgraph~=0.12.1
 six~=1.16.0
 google-cloud-speech
 pyknp
+flask
+flask_socketio

@@ -22,3 +22,5 @@ services:    # サービスを定義する項目
       - ./:/usr/script/rt-backchannel/
     devices:
       - /dev/snd
+    ports:
+      - 5000:5000
