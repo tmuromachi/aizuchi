@@ -2,13 +2,19 @@ from __future__ import division
 
 import re
 import sys
+import pathlib
 import os
 
 from google.cloud import speech
 
 import pyaudio
 from six.moves import queue
-from knp import knp_parser
+from core.knp import knp_parser
+
+# base.pyのあるディレクトリの絶対パスを取得
+current_dir = pathlib.Path(__file__).resolve().parent
+# モジュールのあるパスを追加
+sys.path.append(str(current_dir) + '/../')
 
 # GCP認証情報
 # os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/home/toshiki/data/cloud/gcp/tmuromachi-ed1cc8e5a9ae.json'

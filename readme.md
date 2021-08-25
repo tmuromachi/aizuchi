@@ -38,6 +38,9 @@ https://drive.google.com/file/d/1YdM0fyfs0dOjdlwAUWG0GxiWgKjMsgGU/view?usp=shari
 リアルタイム相槌実行  
 `source run.sh`
 
+webアプリ版  
+http://127.0.0.1:5000/ 
+
 ---
 ### pyaudioのインストールで詰んだ時の対処法(Dockerを使用しない場合)  
 https://qiita.com/musaprg/items/34c4c1e0e9eb8e8cc5a1  

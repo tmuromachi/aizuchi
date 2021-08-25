@@ -29,6 +29,8 @@ RUN make
 # install jumanpp
 RUN make install
 
+# ENV PYTHONPATH "${PYTHONPATH}:/usr/script/rt-backchannel"
+
 # juman(インストールできていない&必要なさそう)
 # https://nlp.ist.i.kyoto-u.ac.jp/?KNP/%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%96%B9%E6%B3%95
 # RUN mkdir -p /usr/parser/juman

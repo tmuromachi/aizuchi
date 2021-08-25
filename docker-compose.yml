@@ -17,6 +17,7 @@ services:    # サービスを定義する項目
       - ./.env
     environment:
        GOOGLE_APPLICATION_CREDENTIALS: /key.json
+       PYTHONPATH: /usr/script/rt-backchannel/src
     volumes:
       - ${GCP_KEY_PLACE}:/key.json:ro
       - ./:/usr/script/rt-backchannel/
