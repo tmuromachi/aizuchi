@@ -21,16 +21,35 @@ socketio = SocketIO(app, async_mode=async_mode)
 thread = None
 thread_lock = Lock()
 
+# UDP(client)
+from socket import socket, AF_INET, SOCK_DGRAM
+import os
+
+HOST = ''
+PORT = os.environ['UDP_PORT']
+
 
 def background_thread():
     """Example of how to send server generated events to clients."""
+    # UDP
+    s = socket(AF_INET, SOCK_DGRAM)  # ソケットを用意
+    s.bind((HOST, int(PORT)))  # バインドしておく
+
     count = 0
     while True:
-        socketio.sleep(0.1)
+        socketio.sleep(0.001)    # 単位(s)
         count += 1
         dt_now = datetime.datetime.now()
+
+        # 受信
+        msg, address = s.recvfrom(8192)
+        msg = msg.decode("utf-8")
+        print(f"message: {msg}\nfrom: {address}")
+
         socketio.emit('my_response',
-                      {'data': 'サーバーからのメッセージです！', 'count': str(dt_now)})
+                      {'data': 'to Server->' + msg, 'count': str(dt_now)})
+
+    s.close()  # ソケットを閉じておく
 
 
 @app.route('/')

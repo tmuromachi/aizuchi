@@ -4,12 +4,13 @@ import re
 import sys
 import pathlib
 import os
+from socket import socket, AF_INET, SOCK_DGRAM
 
 from google.cloud import speech
 
 import pyaudio
 from six.moves import queue
-from core.knp import knp_parser
+from knp import knp_parser
 
 # base.pyのあるディレクトリの絶対パスを取得
 current_dir = pathlib.Path(__file__).resolve().parent
@@ -26,6 +27,12 @@ SEQUENTIAL = True
 # 録音パラメータ
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
+
+# UDP(server)
+HOST = ''
+PORT = os.environ['UDP_PORT']
+# ADDRESS = "127.0.0.1" # 自分に送信
+ADDRESS = "web"  # 自分に送信
 
 
 class MicrophoneStream(object):
@@ -109,7 +116,7 @@ class MicrophoneStream(object):
             yield b"".join(data)
 
 
-def listen_print_loop(responses):
+def listen_print_loop(responses, s):
     """
     Iterates through server responses and prints them.
     サーバーの応答を繰り返し、それらを出力します。
@@ -162,8 +169,10 @@ def listen_print_loop(responses):
 
         # 逐次予測の場合は結果が確定していない段階で表示する
         if SEQUENTIAL:
+            # 音声認識結果表示部分
             print(transcript)
             knp_parser(transcript)
+            s.sendto(transcript.encode(), (ADDRESS, int(PORT)))
         else:
             if not result.is_final:
                 sys.stdout.write(transcript + overwrite_chars + "\r")
@@ -182,6 +191,8 @@ def listen_print_loop(responses):
 
 
 def main():
+    s = socket(AF_INET, SOCK_DGRAM)
+
     # See http://g.co/cloud/speech/docs/languages
     # for a list of supported languages. 言語サポートリストから選択する
     language_code = "ja-JP"  # a BCP-47 language tag
@@ -208,7 +219,9 @@ def main():
 
         # Now, put the transcription responses to use.
         # 次に、応答を使用します。
-        listen_print_loop(responses)
+        listen_print_loop(responses, s)
+
+    s.close()
 
 
 if __name__ == "__main__":

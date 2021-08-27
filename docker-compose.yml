@@ -1,10 +1,10 @@
 version: '3'     # Composeファイルの書式のバージョン
 services:    # サービスを定義する項目
-  app:    # appという名前でサービスを定義
+  app: # appという名前でサービスを定義
     build:
-      context: .
-      dockerfile: src/core/Dockerfile
-    image: python:3.7
+      context: ./src/core
+      dockerfile: Dockerfile
+    # image: python:3.7    # build使用時は不要
     # コンテナにマウントするボリューム（≒ ディレクトリ）を指定する(ホスト上のパス：コンテナ上のパス)
     # :roを付けると、コンテナからはReadOnlyとなる
     # volumes:
@@ -14,37 +14,40 @@ services:    # サービスを定義する項目
     #      コンテナがすぐに終了してしまうのを防ぐことができます。
     tty: true
     working_dir: /usr/script/rt-backchannel
-
     env_file:
       - ./.env
     environment:
-       GOOGLE_APPLICATION_CREDENTIALS: /key.json
-       PYTHONPATH: /usr/script/rt-backchannel/src
+      GOOGLE_APPLICATION_CREDENTIALS: /key.json
+      PYTHONPATH: /usr/script/rt-backchannel/
     volumes:
       - ${GCP_KEY_PLACE}:/key.json:ro
       - ./:/usr/script/rt-backchannel/
     devices:
       - /dev/snd
-    ports:
-      - 000:8000
+    # ports:
+    #   - 8000:8000
     # networks:
     #   - my-network
 
+
   web:
     build:
-      context: .
-      dockerfile: ./src/web/Dockerfile-flask
-    image: python:3.7
+      context: ./src/web
+      dockerfile: Dockerfile
+    # image: python:3.7
     container_name: web_flask
     # tty: trueと記述すると、docker-compose up でコンテナを起動させた際に、
     #      コンテナがすぐに終了してしまうのを防ぐことができます。
     tty: true
     working_dir: /usr/script/flask
+    env_file:
+      - ./.env
     environment:
-      PYTHONPATH: /usr/script/flask/src
+      PYTHONPATH: /usr/script/flask/
     volumes:
       - ./:/usr/script/flask/
     ports:
       - 5000:5000
+    #  - 8000:8000    # 開けなくてもいけるかも？
     # networks:
     #   - my-network

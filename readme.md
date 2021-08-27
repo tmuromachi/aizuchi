@@ -34,7 +34,7 @@ https://drive.google.com/file/d/1YdM0fyfs0dOjdlwAUWG0GxiWgKjMsgGU/view?usp=shari
 `docker ps`
 
 コンテナ内に入る  
-`docker exec -it rt-backchanel /bin/bash`  
+`docker exec -it rt-backchannel /bin/bash`  
 リアルタイム相槌実行  
 `source run.sh`
 
