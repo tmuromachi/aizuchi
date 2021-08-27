@@ -14,16 +14,21 @@ def knp_parser(text):
     # "見出し:%s, 読み:%s, 原形:%s, 品詞:%s, 品詞細分類:%s, 活用型:%s, 活用形:%s, 意味情報:%s, 代表表記:%s"
     # mrph.midasi,mrph.yomi,mrph.genkei,mrph.hinsi,mrph.bunrui,mrph.katuyou1,mrph.katuyou2,mrph.imis,mrph.repname
     final_mrph = mrph_list[-1]
-    is_absolute_boundary(final_mrph)
-    is_strong_boundary(final_mrph)
-    is_week_boundary(final_mrph)
-    is_special_mrph(mrph_list)
+
+    # 相槌可能か
+    if any([is_absolute_boundary(final_mrph), is_strong_boundary(final_mrph), is_week_boundary(final_mrph),
+            is_special_mrph(mrph_list)]):
+        return True
+    return False
 
 
 def is_absolute_boundary(mrph):
     """絶対境界について調べる"""
     if mrph.bunrui == "終助詞":
         print("【絶対境界】文末候補：終助詞：", mrph.midasi)
+    else:
+        return False
+    return True
 
 
 def is_strong_boundary(mrph):
@@ -40,6 +45,9 @@ def is_strong_boundary(mrph):
         print("【強境界】並列節ケレドモ：", mrph.midasi)
     elif mrph.midasi == "し" and mrph.hinsi == "助詞":
         print("【強境界】並列節シ：", mrph.midasi)
+    else:
+        return False
+    return True
 
 
 def is_week_boundary(mrph):
@@ -79,8 +87,8 @@ def is_week_boundary(mrph):
         print("【弱境界】条件節レバ：", mrph.midasi)
     elif mrph.midasi == "だの" and mrph.hinsi == "助詞":
         print("【弱境界】並列節ダノ：", mrph.midasi)
-    elif mrph.midasi == "で" and mrph.hinsi == "助詞":
-        print("【弱境界】条件節デ：", mrph.midasi)
+    # elif mrph.midasi == "で" and mrph.hinsi == "助詞":
+    #     print("【弱境界】条件節デ：", mrph.midasi)
     elif mrph.midasi == "なり" and mrph.hinsi == "助詞":
         print("【弱境界】並列節ナリ：", mrph.midasi)
     elif mrph.midasi == "から" and mrph.hinsi == "助詞":
@@ -91,11 +99,13 @@ def is_week_boundary(mrph):
         print("【弱境界】理由節ノデ：", mrph.midasi)
     elif mrph.midasi == "ての" and mrph.hinsi == "助詞":
         print("【弱境界】並列節テノ：", mrph.midasi)
-
     # elif mrph.hinsi == "感動詞":
     #    print("【弱境界】感動詞：", mrph.midasi)
     # elif mrph.hinsi == "接続詞":
     #     print("【弱境界】接続詞：", mrph.midasi)
+    else:
+        return False
+    return True
 
 
 def is_special_mrph(mrph_list):
@@ -106,3 +116,6 @@ def is_special_mrph(mrph_list):
 
     if "じゃん" in text:
         print("助詞 終助詞 ~じゃん")
+    else:
+        return False
+    return True

@@ -171,7 +171,8 @@ def listen_print_loop(responses, s):
         if SEQUENTIAL:
             # 音声認識結果表示部分
             print(transcript)
-            knp_parser(transcript)
+            if knp_parser(transcript):    # 相槌箇所であるかどうか
+                transcript = transcript + '<i style="color:#ddd;">' + '【相槌可能】' + '</i>'
             s.sendto(transcript.encode(), (ADDRESS, int(PORT)))
         else:
             if not result.is_final:

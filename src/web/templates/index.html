@@ -27,8 +27,7 @@
             // サーバー送信データ
             socket.on('my_response', function(msg, cb) {
                 //表示だけ
-                $('#log').replaceWith('<div id="log">' + 'Received #' + msg.count + ': ' + msg.data +
-                '<i style="color:#ddd;">' + 'こんにちは！' + '</i>'+ '</div>');
+                $('#log').replaceWith('<div id="log">' + 'Received #' + msg.count + ': ' + msg.data + '</div>');
                 if (cb)
                     cb();
             });

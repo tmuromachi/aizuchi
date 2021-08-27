@@ -8,6 +8,6 @@ RUN apt-get update && apt-get install -y
 RUN mkdir -p /usr/script/flask
 COPY ./ /usr/script/flask
 # WORKDIR /usr/src/script/flask
-COPY ./requirements-flask.txt /requirements-flask.txt
+COPY requirements.txt /requirements-flask.txt
 
 RUN pip install -r /requirements-flask.txt
