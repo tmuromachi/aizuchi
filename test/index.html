@@ -29,6 +29,8 @@
     resultDiv.innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>';
   }
 
+  recognition.start();
+
   startBtn.onclick = () => {
     recognition.start();
   }

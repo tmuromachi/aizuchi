@@ -174,7 +174,7 @@ def listen_print_loop(responses, s):
             print(transcript)
             wrap_transcript = text_wrapper(transcript, 30)
             if knp_parser(transcript):    # 相槌箇所であるかどうか
-                wrap_transcript = wrap_transcript + '<br><i style="color:#ddd;">' + '【相槌可能】' + '</i>'
+                wrap_transcript = wrap_transcript + '<br><span style="color:#AAAAAA;">' + '【相槌可能】' + '</span>'
             s.sendto(wrap_transcript.encode(), (ADDRESS, int(PORT)))
         else:
             if not result.is_final:
