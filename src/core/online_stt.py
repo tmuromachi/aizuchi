@@ -11,6 +11,7 @@ from google.cloud import speech
 import pyaudio
 from six.moves import queue
 from knp import knp_parser
+from util import text_wrapper
 
 # base.pyのあるディレクトリの絶対パスを取得
 current_dir = pathlib.Path(__file__).resolve().parent
@@ -171,9 +172,10 @@ def listen_print_loop(responses, s):
         if SEQUENTIAL:
             # 音声認識結果表示部分
             print(transcript)
+            wrap_transcript = text_wrapper(transcript, 30)
             if knp_parser(transcript):    # 相槌箇所であるかどうか
-                transcript = transcript + '<i style="color:#ddd;">' + '【相槌可能】' + '</i>'
-            s.sendto(transcript.encode(), (ADDRESS, int(PORT)))
+                wrap_transcript = wrap_transcript + '<br><i style="color:#ddd;">' + '【相槌可能】' + '</i>'
+            s.sendto(wrap_transcript.encode(), (ADDRESS, int(PORT)))
         else:
             if not result.is_final:
                 sys.stdout.write(transcript + overwrite_chars + "\r")

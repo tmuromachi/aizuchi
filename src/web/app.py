@@ -46,8 +46,7 @@ def background_thread():
         msg = msg.decode("utf-8")
         print(f"message: {msg}\nfrom: {address}")
 
-        socketio.emit('my_response',
-                      {'data': 'to Server->' + msg, 'count': str(dt_now)})
+        socketio.emit('my_response', {'data': msg, 'count': str(dt_now)})
 
     s.close()  # ソケットを閉じておく
 
