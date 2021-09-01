@@ -1,7 +1,7 @@
 from pyknp import Juman
 
 
-def knp_parser(text):
+def jumanpp_parser(text):
     """
     音声認識結果をKNPにかけ、音声認識結果の最後の形態素を調査する。
     :return:

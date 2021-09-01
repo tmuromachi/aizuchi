@@ -1,42 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-  <script>
-    const startBtn = document.querySelector('#start-btn');
-    const stopBtn = document.querySelector('#stop-btn');
-    const resultDiv = document.querySelector('#result-div');
-
-    SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'ja-JP';
-    recognition.interimResults = true;
-    recognition.continuous = true; // 認識持続化
-
-    let finalTranscript = ''; // 確定した(黒の)認識結果
-
-    recognition.onresult = (event) => {
-      let interimTranscript = ''; // 暫定(灰色)の認識結果
-
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        let transcript = event.results[i][0].transcript;
-        if (event.results[i].isFinal) {
-          finalTranscript += transcript;
-        } else {
-        interimTranscript = transcript;
-        }
-      }
-      resultDiv.innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>';
-
-    }
-
-    recognition.start();
-  </script>
+  <meta charset="UTF-8">
+  <title>HTML Sample</title>
+  <script type="text/javascript" src="stt.js"></script>
 </head>
 <body>
-  <div id="result-div"></div>
-
-
+  <div class="header">Header領域</div>
+  <div class="main">
+    <h1>見出し</h1>
+    <p>コンテンツ</p>
+  </div>
 </body>
 </html>

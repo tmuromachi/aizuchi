@@ -31,24 +31,26 @@ PORT = os.environ['UDP_PORT']
 
 def background_thread():
     """Example of how to send server generated events to clients."""
+    print("")
+
     # UDP
-    s = socket(AF_INET, SOCK_DGRAM)  # ソケットを用意
-    s.bind((HOST, int(PORT)))  # バインドしておく
-
-    count = 0
-    while True:
-        socketio.sleep(0.001)    # 単位(s)
-        count += 1
-        dt_now = datetime.datetime.now()
-
-        # 受信
-        msg, address = s.recvfrom(8192)
-        msg = msg.decode("utf-8")
-        print(f"message: {msg}\nfrom: {address}")
-
-        socketio.emit('my_response', {'data': msg, 'count': str(dt_now)})
-
-    s.close()  # ソケットを閉じておく
+    # s = socket(AF_INET, SOCK_DGRAM)  # ソケットを用意
+    # s.bind((HOST, int(PORT)))  # バインドしておく
+    #
+    # count = 0
+    # while True:
+    #     socketio.sleep(0.001)    # 単位(s)
+    #     count += 1
+    #     dt_now = datetime.datetime.now()
+    #
+    #     # 受信
+    #     msg, address = s.recvfrom(8192)
+    #     msg = msg.decode("utf-8")
+    #     print(f"message: {msg}\nfrom: {address}")
+    #
+    #     socketio.emit('my_response', {'data': msg, 'count': str(dt_now)})
+    #
+    # s.close()  # ソケットを閉じておく
 
 
 @app.route('/')
@@ -80,6 +82,16 @@ def connect():
 @socketio.on('disconnect')
 def test_disconnect():
     print('Client disconnected', request.sid)
+
+
+@socketio.on('stt_result')
+def test_connect(stt_result):
+    print(str(stt_result))
+    global thread
+    if thread is None:
+        thread = socketio.start_background_task(target=background_thread)
+    dt_now = datetime.datetime.now()
+    emit('jumanpp_parser', {'data': str(stt_result['data']), 'count': 0})
 
 
 if __name__ == '__main__':

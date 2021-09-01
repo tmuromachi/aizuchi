@@ -10,7 +10,7 @@ from google.cloud import speech
 
 import pyaudio
 from six.moves import queue
-from knp import knp_parser
+from jumanpp import jumanpp_parser
 from util import text_wrapper
 
 # base.pyのあるディレクトリの絶対パスを取得
@@ -173,7 +173,7 @@ def listen_print_loop(responses, s):
             # 音声認識結果表示部分
             print(transcript)
             wrap_transcript = text_wrapper(transcript, 30)
-            if knp_parser(transcript):    # 相槌箇所であるかどうか
+            if jumanpp_parser(transcript):    # 相槌箇所であるかどうか
                 wrap_transcript = wrap_transcript + '<br><span style="color:#AAAAAA;">' + '【相槌可能】' + '</span>'
             s.sendto(wrap_transcript.encode(), (ADDRESS, int(PORT)))
         else:
