@@ -20,10 +20,8 @@ recognition.onresult = (event) => {
         }
     }
     // resultDiv.innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>';
-    // document.write(finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>')
     stt_result = interimTranscript;
-    stt_result = "こですですでうｓ〜〜"
-    console.log(interimTranscript);
+    //console.log(interimTranscript);
 }
 
 recognition.start();

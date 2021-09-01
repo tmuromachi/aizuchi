@@ -13,29 +13,31 @@ $(document).ready(function() {
         socket.emit('my_event', {data: 'connected'});
     });
 
-    //サーバーにデータを送信する
-    //$('form#emit').submit(function(event) {
-    //    socket.emit('my event', {data: $('#emit_data').val()});
-    //    return false;
-    //});
-    socket.emit('stt_result', {data: stt_result});
+    window.setInterval(function() {
+        //サーバーにデータを送信する
+        //$('form#emit').submit(function(event) {
+        //    socket.emit('my event', {data: $('#emit_data').val()});
+        //    return false;
+        //});
+        socket.emit('stt_result', {data: stt_result});
 
-    // Event handler for server sent data.
-    // The callback function is invoked whenever the server emits data
-    // to the client. The data is then displayed in the "Received"
-    // section of the page.
-    // サーバーからjumanppで解析済みデータを受信する
-    socket.on('jumanpp_parser', function(msg, cb) {
-        //表示だけ
-        $('#log').replaceWith('<div id="log">' + msg.data + '</div>');
-        //if ( msg.data.match('【相槌可能】')) {
-        //    $('.bg').css( { 'background-color' : 'rgba(255,255,255,.8)'});
-        //} else {
-        //    $('.bg').css( { 'background-image' : 'linear-gradient(45deg, red, blue)'});
-        //}
-        if (cb)    // 名前空間
-            cb();
-    });
+        // Event handler for server sent data.
+        // The callback function is invoked whenever the server emits data
+        // to the client. The data is then displayed in the "Received"
+        // section of the page.
+        // サーバーからjumanppで解析済みデータを受信する
+        socket.on('jumanpp_parser', function(msg, cb) {
+            //表示だけ
+            $('#log').replaceWith('<div id="log">' + msg.data + '</div>');
+            //if ( msg.data.match('【相槌可能】')) {
+            //    $('.bg').css( { 'background-color' : 'rgba(255,255,255,.8)'});
+            //} else {
+            //    $('.bg').css( { 'background-image' : 'linear-gradient(45deg, red, blue)'});
+            //}
+            if (cb)    // 名前空間
+                cb();
+        });
+    }, 100);    //100ミリ秒間隔で通信
 
     // Interval function that tests message latency by sending a "ping"
     // message. The server then responds with a "pong" message and the
