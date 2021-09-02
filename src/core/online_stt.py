@@ -11,7 +11,7 @@ from google.cloud import speech
 import pyaudio
 from six.moves import queue
 from jumanpp import jumanpp_parser
-from util import text_wrapper
+from src.web.util import text_wrapper
 
 # base.pyのあるディレクトリの絶対パスを取得
 current_dir = pathlib.Path(__file__).resolve().parent

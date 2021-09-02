@@ -1,9 +1,9 @@
 from threading import Lock
-from flask import Flask, render_template, session, request, \
-    copy_current_request_context
-from flask_socketio import SocketIO, emit, join_room, leave_room, \
-    close_room, rooms, disconnect
-import datetime
+from flask import Flask, render_template, session, request
+from flask_socketio import SocketIO, emit
+
+from util import text_wrapper
+from jumanpp import jumanpp_parser
 
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
@@ -22,35 +22,15 @@ thread = None
 thread_lock = Lock()
 
 # UDP(client)
-from socket import socket, AF_INET, SOCK_DGRAM
 import os
 
 HOST = ''
 PORT = os.environ['UDP_PORT']
 
 
-def background_thread():
+def background_thread(transcript):
     """Example of how to send server generated events to clients."""
     print("")
-
-    # UDP
-    # s = socket(AF_INET, SOCK_DGRAM)  # ソケットを用意
-    # s.bind((HOST, int(PORT)))  # バインドしておく
-    #
-    # count = 0
-    # while True:
-    #     socketio.sleep(0.001)    # 単位(s)
-    #     count += 1
-    #     dt_now = datetime.datetime.now()
-    #
-    #     # 受信
-    #     msg, address = s.recvfrom(8192)
-    #     msg = msg.decode("utf-8")
-    #     print(f"message: {msg}\nfrom: {address}")
-    #
-    #     socketio.emit('my_response', {'data': msg, 'count': str(dt_now)})
-    #
-    # s.close()  # ソケットを閉じておく
 
 
 @app.route('/')
@@ -72,10 +52,10 @@ def my_ping():
 
 @socketio.event
 def connect():
-    global thread
-    with thread_lock:
-        if thread is None:
-            thread = socketio.start_background_task(background_thread)
+    # global thread
+    # with thread_lock:
+    #     if thread is None:
+    #         thread = socketio.start_background_task(background_thread)
     emit('my_response', {'data': 'Connected', 'count': 0})
 
 
@@ -85,16 +65,17 @@ def test_disconnect():
 
 
 @socketio.on('stt_result')
-def test_connect(stt_result):
-    print(str(stt_result))
-    global thread
-    if thread is None:
-        thread = socketio.start_background_task(target=background_thread)
-    dt_now = datetime.datetime.now()
-    emit('jumanpp_parser', {'data': str(stt_result['data']), 'count': 0})
+def receive_transcript(stt_result):
+    # 音声認識結果をクライアント側から受け取って整形/相槌判定を行う
+    wrap_transcript = text_wrapper(stt_result['data'], 30)
+    if jumanpp_parser(wrap_transcript):  # 相槌箇所であるかどうか
+        wrap_transcript = wrap_transcript + '<br><span style="color:#AAAAAA;">' + '【相槌可能】' + '</span>'
+    print(wrap_transcript)
+    socketio.emit('jumanpp_parser', {'data': wrap_transcript, 'count': 0})
 
 
 if __name__ == '__main__':
     # SocketIOサーバをデバッグモードで起動
     # socketio.run(app, debug=True)
+    # socketio.run(app, host="0.0.0.0")
     socketio.run(app, host="0.0.0.0")
