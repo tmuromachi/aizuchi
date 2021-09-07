@@ -12,7 +12,7 @@ class Mrph:
 
 
 # cmd = "ls -la"
-cmd = 'echo "今夜はカレーよ" | ruby ../../src/web/jumanpp_client.rb --host localhost'
+cmd = 'echo "今夜はカレーよ" | ruby ../../src/app/jumanpp_client.rb --host localhost'
 res = subprocess.run(cmd, shell=True, encoding='utf-8', stdout=subprocess.PIPE)
 print(res.stdout)
 print("------")

@@ -3,7 +3,7 @@ from socket import socket, AF_INET, SOCK_DGRAM
 HOST = ''
 PORT = 8000
 # ADDRESS = "127.0.0.1" # 自分に送信
-ADDRESS = "web" # 自分に送信
+ADDRESS = "app" # 自分に送信
 
 s = socket(AF_INET, SOCK_DGRAM)
 # ブロードキャストする場合は、ADDRESSを

@@ -1,23 +1,39 @@
 version: '3'     # Composeファイルの書式のバージョン
 services:    # サービスを定義する項目
-  web:
+  app:
     build:
-      context: ./src/web
+      context: app
       dockerfile: Dockerfile
     # image: python:3.7
-    container_name: web_flask
+    container_name: app-server
+    hostname: app-server
     # tty: trueと記述すると、docker-compose up でコンテナを起動させた際に、
     #      コンテナがすぐに終了してしまうのを防ぐことができます。
     tty: true
-    working_dir: /usr/script/flask
+    working_dir: /var/www/
     env_file:
       - ./.env
     environment:
-      PYTHONPATH: /usr/script/flask/
+      PYTHONPATH: /var/www/
+      TZ: Asia/Tokyo
     volumes:
-      - ./:/usr/script/flask/
+      - ./app/:/var/www/
     ports:
-       - 5000:5000
-    #  - 8000:8000    # 開けなくてもいけるかも？
-    # networks:
-    #   - my-network
+      # - 5000:5000
+      - 3031:3031
+      # - 3031:5000
+
+  web:
+    container_name: web-server
+    hostname: web-server
+    build: ./web
+    volumes:
+      - ./web/nginx.conf:/etc/nginx/nginx.conf
+      # nginxのログをホストOS側に出力
+      - /tmp/nginx_log:/var/log/nginx
+    links:
+      - app
+    ports:
+      - 4231:80
+    environment:
+      TZ: Asia/Tokyo

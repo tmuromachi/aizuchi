@@ -77,5 +77,5 @@ def receive_transcript(stt_result):
 if __name__ == '__main__':
     # SocketIOサーバをデバッグモードで起動
     # socketio.run(app, debug=True)
-    # socketio.run(app, host="0.0.0.0")
     socketio.run(app, host="0.0.0.0")
+    # socketio.run(app)
