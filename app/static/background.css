@@ -7,9 +7,11 @@ body {
 }
 
 .bg {
-  animation:slide 3s ease-in-out infinite alternate;
+  animation:slide 10s ease-in-out infinite alternate;
   /* background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);*/
-  background-image: linear-gradient(45deg, #fbc2eb, #a6c1ee);
+  /*background-image: linear-gradient(45deg, #fbc2eb, #a6c1ee);*/
+  background-image: linear-gradient(45deg, #009FFF, #ec2F4B);
+  /*background-image: radial-gradient(#ffffff, #2980b9, #6dd5fa);*/
   bottom:0;
   left:-50%;
   opacity:.5;

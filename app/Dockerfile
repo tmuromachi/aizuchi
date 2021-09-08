@@ -34,9 +34,9 @@ RUN make
 # install jumanpp
 RUN make install
 
-# juman++をサーバーモードで起動(バックグラウンド)
-# RUN ruby /usr/script/flask/jumanpp_server.rb &
-
 # uWSGI
-WORKDIR /var/www/
-CMD ["uwsgi","--ini","/var/www/uwsgi.ini"]
+# WORKDIR /var/www/
+# CMD ["uwsgi","--ini","/var/www/uwsgi.ini"]
+
+# juman++ server起動 / flaskサーバー起動
+CMD ["/var/www/start.sh"]

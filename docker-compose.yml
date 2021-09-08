@@ -19,21 +19,6 @@ services:    # サービスを定義する項目
     volumes:
       - ./app/:/var/www/
     ports:
-      # - 5000:5000
-      - 3031:3031
+      - 5000:5000
+      # - 3031:3031
       # - 3031:5000
-
-  web:
-    container_name: web-server
-    hostname: web-server
-    build: ./web
-    volumes:
-      - ./web/nginx.conf:/etc/nginx/nginx.conf
-      # nginxのログをホストOS側に出力
-      - /tmp/nginx_log:/var/log/nginx
-    links:
-      - app
-    ports:
-      - 4231:80
-    environment:
-      TZ: Asia/Tokyo
