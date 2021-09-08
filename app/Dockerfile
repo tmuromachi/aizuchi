@@ -3,6 +3,7 @@ FROM python:3
 RUN apt-get update && apt-get install -y
 
 RUN apt-get install -y portaudio19-dev build-essential libssl-dev libffi-dev python3-dev cmake ruby
+# uwsgi-core uwsgi-plugin-python3
 
 # mecab
 # RUN apt-get install -y mecab libmecab-dev mecab-ipadic mecab-ipadic-utf8 git make curl xz-utils file swig
