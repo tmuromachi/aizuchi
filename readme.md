@@ -1,71 +1,31 @@
-# RealTime-backchannel
-### 動作環境  
-一部の音声系ライブラリを使用する際に面倒なことが起きる可能性が高いため、
+# AIzuchi: RealTime-backchannels-System
+
+発話内容から相槌が可能かリアルタイムに判定するアプリケーションです。  
+音声認識結果をJuman++によって解析し、言語学の知見から構築した独自の単純なルールによって相槌可能か判定します。  
+
+音声認識を「Web Speech API Speech Recognition」か、「Google Cloud Speech-to-Text」を用いて行っており、ブランチごとに異なります。  
+mainブランチのlocalで動くwebアプリケーションを動作するためにはWSL2を推奨します。  
+Google Cloud Speech-to-Textを用いるブランチを動かす場合にはDockerがマイクデバイスに接続できる環境が必要です。
+
+現在、webアプリとして動作するように開発中です。(websocket関連のエラーが未解決)
+
+### Environment
+一部の音声系ライブラリやJuman++を使用する際に面倒なことが起きる可能性が高いため、
 基本的にはDockerで環境構築することを想定しています。
 
-Ubuntu(おすすめ)  
-mac  
-Windows(Docker+音声入出力を使用するため、ProかVMが必要。かなり厳しそう)
+- Ubuntu(推奨)
+- Windows(mainブランチはWSL2での動作を確認)
+- mac
 
-python 3.7.9
+### Setup
+1. `.env.sample`ファイルをコピーして`.env`ファイルを作成します(Web Speech APIを使用した音声認識を使用する場合は特に設定は必要ありません。)  
+2. `docker-compose build`を行う
 
-### Dockerインストール(公式)
-https://docs.docker.com/engine/install/ubuntu/  
-「Install using the repository」の通りにインストールすればよい
+### Quick Start
+1. `docker-compose up`を行う  
+2. Chromeから http://localhost:5000/ にアクセスする
 
-----
-### Docker(docker-compose)で実行環境の構築
-ビルド  
-認証用jsonファイルをconfig以下などに設置する(git管理されないところに設置する)  
-テストに使用する場合は以下からjsonファイルをダウンロードして設置する  
-https://drive.google.com/file/d/1YdM0fyfs0dOjdlwAUWG0GxiWgKjMsgGU/view?usp=sharing  
-- 長時間使用すると室町が課金する羽目になるのであくまでテストに使用してください。 
-- 使用する場合は申請してください。
-- .configは.gitignoreに追加してあるので大丈夫だと思いますが、取扱には気をつけてください。  
-
-その他の方法  
-./.envに認証に使用するjsonファイルのパスを記載する(絶対パス)  
-または以下の通り  
-`export GOOGLE_APPLICATION_CREDENTIALS=/home/toshiki/data/cloud/gcp/tmuromachi-ed1cc8e5a9ae.json`
-
-`docker-compose up -d --build`
-
-コンテナが立ち上がったか確認  
-`docker ps`
-
-コンテナ内に入る  
-`docker exec -it rt-backchannel /bin/bash`  
-リアルタイム相槌実行  
-`source run.sh`
-
-webアプリ版  
-http://127.0.0.1:5000/ 
-
----
-### pyaudioのインストールで詰んだ時の対処法(Dockerを使用しない場合)  
-https://qiita.com/musaprg/items/34c4c1e0e9eb8e8cc5a1  
-`sudo apt-get install portaudio19-dev`  
-`pip install pyaudio`  
-
-`sudo apt-get install build-essential libssl-dev libffi-dev python3-dev`  
-↑のあたりも必要になりそう  
-
-起動直後に表示されるALSAのエラーは問題ないため無視する
-
-Googleのサンプル+認証情報を以下のように渡す  
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '取得した認証キー(.json)'
-
----
-参考資料  
-無限のストリーミング チュートリアル | Google Cloud
-https://cloud.google.com/speech-to-text/docs/endless-streaming-tutorial?hl=ja
-
-
-----
-### dockerのみを用いた手順(旧)
-
-(sudo) docker build . -t rt-backchannel
-
-(sudo) docker run --name rt-backchannel -it rt-backchannel bash
-
-sudo docker run --device /dev/snd:/dev/snd --name rt-backchannel -it rt-backchannel bash
+### Others
+Web Speech APIの使用は無料ですが、Google Cloud Speech-to-Textの使用は従量課金制です。  
+Google Cloud Speech-to-Textを使用する際にはGCP認証用jsonファイルをconfig以下などに設置し、
+`.env`の`GCP_KEY_PLACE`に絶対パスで認証用ファイルのパスを記述します。  
