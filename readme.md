@@ -1,6 +1,8 @@
 # AIzuchi: RealTime-backchannels-System
 
+<div align="center">
 <img src="data/AIzuchi_sample.gif" width="400">
+</div>
 
 
 発話内容から相槌が可能かリアルタイムに判定するアプリケーションです。  
