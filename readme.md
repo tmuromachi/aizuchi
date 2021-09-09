@@ -7,8 +7,6 @@
 mainブランチのlocalで動くwebアプリケーションを動作するためにはWSL2を推奨します。  
 Google Cloud Speech-to-Textを用いるブランチを動かす場合にはDockerがマイクデバイスに接続できる環境が必要です。
 
-現在、webアプリとして動作するように開発中です。(websocket関連のエラーが未解決)
-
 ### Environment
 一部の音声系ライブラリやJuman++を使用する際に面倒なことが起きる可能性が高いため、
 基本的にはDockerで環境構築することを想定しています。
@@ -29,3 +27,5 @@ Google Cloud Speech-to-Textを用いるブランチを動かす場合にはDocke
 Web Speech APIの使用は無料ですが、Google Cloud Speech-to-Textの使用は従量課金制です。  
 Google Cloud Speech-to-Textを使用する際にはGCP認証用jsonファイルをconfig以下などに設置し、
 `.env`の`GCP_KEY_PLACE`に絶対パスで認証用ファイルのパスを記述します。  
+
+今後webアプリとして動作させる予定です。(Flask+uWSGI+Nginxの構成。dev_webブランチで開発中。websocket関連のエラーが未解決。マイクを使用するためSSL対応が必要。)
