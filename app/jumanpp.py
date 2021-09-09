@@ -1,29 +1,47 @@
-from pyknp import Juman
+import subprocess
+import io
+
+from util import text_wrapper
 
 
-def knp_parser(text):
+class Mrph:
+    def __init__(self, midasi, hinsi, bunrui):
+        self.midasi = midasi
+        self.hinsi= hinsi
+        self.bunrui = bunrui
+
+
+def jumanpp_parser(text):
     """
-    音声認識結果をKNPにかけ、音声認識結果の最後の形態素を調査する。
+    音声認識結果をJumanにかけ、相槌可能かを判定する
     :return:
     """
-    jumanpp = Juman()
+    text = text.replace(' ', '　')  # Juman用に半角スペースを全角へ
+    if len(text) < 3:
+        return False
 
-    text = text.replace(' ', '　')  # KNP用に半角スペースを全角へ
-    result = jumanpp.analysis(text)
-    mrph_list = result.mrph_list()
-    # "見出し:%s, 読み:%s, 原形:%s, 品詞:%s, 品詞細分類:%s, 活用型:%s, 活用形:%s, 意味情報:%s, 代表表記:%s"
-    # mrph.midasi,mrph.yomi,mrph.genkei,mrph.hinsi,mrph.bunrui,mrph.katuyou1,mrph.katuyou2,mrph.imis,mrph.repname
-    final_mrph = mrph_list[-1]
-    is_absolute_boundary(final_mrph)
-    is_strong_boundary(final_mrph)
-    is_week_boundary(final_mrph)
-    is_special_mrph(mrph_list)
+    # サーバーモードJuman++に送る
+    cmd = 'echo "' + text + '" | ruby jumanpp_client.rb --host localhost'
+    res = subprocess.run(cmd, shell=True, encoding='utf-8', stdout=subprocess.PIPE)
+
+    # 表層形 読み 見出し語 品詞大分類 品詞大分類 ID 品詞細分類 品詞細分類 ID 活用型 活用型 ID 活用形 活用形 ID 意味情報
+    juman_finalmrph = res.stdout.splitlines()[-2].split()
+    final_mrph = Mrph(juman_finalmrph[2], juman_finalmrph[3], juman_finalmrph[5])  # 最終形態素の見出し語,品詞大分類,品詞細分類のみ
+
+    # 相槌可能か
+    if any([is_absolute_boundary(final_mrph), is_strong_boundary(final_mrph), is_week_boundary(final_mrph),
+            is_special_mrph(text)]):
+        return True
+    return False
 
 
 def is_absolute_boundary(mrph):
     """絶対境界について調べる"""
     if mrph.bunrui == "終助詞":
         print("【絶対境界】文末候補：終助詞：", mrph.midasi)
+    else:
+        return False
+    return True
 
 
 def is_strong_boundary(mrph):
@@ -40,6 +58,9 @@ def is_strong_boundary(mrph):
         print("【強境界】並列節ケレドモ：", mrph.midasi)
     elif mrph.midasi == "し" and mrph.hinsi == "助詞":
         print("【強境界】並列節シ：", mrph.midasi)
+    else:
+        return False
+    return True
 
 
 def is_week_boundary(mrph):
@@ -79,8 +100,8 @@ def is_week_boundary(mrph):
         print("【弱境界】条件節レバ：", mrph.midasi)
     elif mrph.midasi == "だの" and mrph.hinsi == "助詞":
         print("【弱境界】並列節ダノ：", mrph.midasi)
-    elif mrph.midasi == "で" and mrph.hinsi == "助詞":
-        print("【弱境界】条件節デ：", mrph.midasi)
+    # elif mrph.midasi == "で" and mrph.hinsi == "助詞":
+    #     print("【弱境界】条件節デ：", mrph.midasi)
     elif mrph.midasi == "なり" and mrph.hinsi == "助詞":
         print("【弱境界】並列節ナリ：", mrph.midasi)
     elif mrph.midasi == "から" and mrph.hinsi == "助詞":
@@ -91,18 +112,19 @@ def is_week_boundary(mrph):
         print("【弱境界】理由節ノデ：", mrph.midasi)
     elif mrph.midasi == "ての" and mrph.hinsi == "助詞":
         print("【弱境界】並列節テノ：", mrph.midasi)
-
     # elif mrph.hinsi == "感動詞":
     #    print("【弱境界】感動詞：", mrph.midasi)
     # elif mrph.hinsi == "接続詞":
     #     print("【弱境界】接続詞：", mrph.midasi)
+    else:
+        return False
+    return True
 
 
-def is_special_mrph(mrph_list):
+def is_special_mrph(text):
     """JUMAN++で解析できない特殊な単語を調べる"""
-    text = ""
-    for mrph in mrph_list[-5:]:    # スライスだとIndex Error起きない
-        text = text + mrph.midasi
-
     if "じゃん" in text:
         print("助詞 終助詞 ~じゃん")
+    else:
+        return False
+    return True

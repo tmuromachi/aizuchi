@@ -1,24 +1,24 @@
 version: '3'     # Composeファイルの書式のバージョン
 services:    # サービスを定義する項目
-  app:    # appという名前でサービスを定義
-    build: .
-    image: python:3.7
-    # コンテナにマウントするボリューム（≒ ディレクトリ）を指定する(ホスト上のパス：コンテナ上のパス)
-    # :roを付けると、コンテナからはReadOnlyとなる
-    # volumes:
-    #   - ./:/tmp/working
-    container_name: rt-backchannel
+  app:
+    build:
+      context: app
+      dockerfile: Dockerfile
+    # image: python:3.7
+    container_name: app-server
+    hostname: app-server
     # tty: trueと記述すると、docker-compose up でコンテナを起動させた際に、
     #      コンテナがすぐに終了してしまうのを防ぐことができます。
     tty: true
-    working_dir: /usr/script/rt-backchannel
-
+    working_dir: /var/www/
     env_file:
       - ./.env
     environment:
-       GOOGLE_APPLICATION_CREDENTIALS: /key.json
+      PYTHONPATH: /var/www/
+      TZ: Asia/Tokyo
     volumes:
-      - ${GCP_KEY_PLACE}:/key.json:ro
-      - ./:/usr/script/rt-backchannel/
-    devices:
-      - /dev/snd
+      - ./app/:/var/www/
+    ports:
+      - 5000:5000
+      # - 3031:3031
+      # - 3031:5000
