@@ -1,5 +1,8 @@
 # AIzuchi: RealTime-backchannels-System
 
+<img src="data/AIzuchi_sample.gif" width="400">
+
+
 発話内容から相槌が可能かリアルタイムに判定するアプリケーションです。  
 音声認識結果をJuman++によって解析し、言語学の知見から構築した独自の単純なルールによって相槌可能か判定します。  
 
