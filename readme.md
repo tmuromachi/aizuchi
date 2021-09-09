@@ -1,4 +1,4 @@
-# AIzuchi: RealTime-backchannels-System
+# AIzuchi: Online-backchannels-System
 
 <div align="center">
 <img src="data/AIzuchi_sample.gif" width="400">
