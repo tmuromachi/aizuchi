@@ -8,8 +8,9 @@
 発話内容から相槌が可能かリアルタイムに判定するアプリケーションです。  
 音声認識結果をJuman++によって解析し、言語学の知見から構築した独自の単純なルールによって相槌可能か判定します。  
 
-音声認識を「Web Speech API Speech Recognition」か、「Google Cloud Speech-to-Text」を用いて行っており、ブランチごとに異なります。  
-mainブランチのlocalで動くwebアプリケーションを動作するためにはWSL2を推奨します。  
+音声認識にはWeb Speech API Speech Recognitionか、Google Cloud Speech-to-Textを用いています。  
+フロント側で音声認識を行う場合(webアプリケーション等)はWeb Speech APIを使用し、GUIが必要ない場合にはGoogle Cloud STTを使用します。  
+mainブランチ(localで動くwebアプリケーション)を動作させる際にはWSL2を推奨します。  
 Google Cloud Speech-to-Textを用いるブランチを動かす場合にはDockerがマイクデバイスに接続できる環境が必要です。
 
 ### Environment
@@ -21,7 +22,7 @@ Google Cloud Speech-to-Textを用いるブランチを動かす場合にはDocke
 - mac
 
 ### Setup
-1. `.env.sample`ファイルをコピーして`.env`ファイルを作成します(Web Speech APIを使用した音声認識を使用する場合は特に設定は必要ありません。)  
+1. `.env.sample`ファイルをコピーして`.env`ファイルを作成します(Web Speech APIを使用した音声認識を使用する場合(mainブランチ等)はコピー後の設定は必要ありません。)  
 2. `docker-compose build`を行う
 
 ### Quick Start
