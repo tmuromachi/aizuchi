@@ -1,4 +1,5 @@
 const result = document.querySelector('#result-div');
+
 $(document).ready(function() {
     // Connect to the Socket.IO server.
     // The connection URL has the following format, relative to the current page:
@@ -29,15 +30,19 @@ $(document).ready(function() {
         socket.on('jumanpp_parser', function(msg, cb) {
             //表示だけ
             $('#log').replaceWith('<div id="log">' + msg.data + '</div>');
-            //if ( msg.data.match('【相槌可能】')) {
-            //    $('.bg').css( { 'background-color' : 'rgba(255,255,255,.8)'});
-            //} else {
-            //    $('.bg').css( { 'background-image' : 'linear-gradient(45deg, red, blue)'});
-            //}
+            if ( msg.data.match('【相槌可能】')) {
+                document.getElementById("audioElement").play();    // 相槌再生
+            }
             if (cb)    // 名前空間
                 cb();
         });
     }, 100);    //100ミリ秒間隔で通信
+
+    // 音声出力用ボタン
+    document.getElementById("audioPlay").onclick = function(){
+        // document.getElementById("audioElement").play();
+        document.getElementById("audioPlay").style.visibility = "hidden";
+    };
 
     // Interval function that tests message latency by sending a "ping"
     // message. The server then responds with a "pong" message and the

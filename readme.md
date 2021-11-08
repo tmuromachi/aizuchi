@@ -34,4 +34,6 @@ Web Speech APIの使用は無料ですが、Google Cloud Speech-to-Textの使用
 Google Cloud Speech-to-Textを使用する際にはGCP認証用jsonファイルをconfig以下などに設置し、
 `.env`の`GCP_KEY_PLACE`に絶対パスで認証用ファイルのパスを記述します。  
 
-今後webアプリとして動作させる予定です。(Flask+uWSGI+Nginxの構成。dev_webブランチで開発中。websocket関連のエラーが未解決。マイクを使用するためSSL対応が必要。)
+今後webアプリとしての動作も目指しています。(Flask+uWSGI+Nginxの構成。dev_webブランチで開発中。websocket関連のエラーが未解決。マイクを使用するためSSL対応が必要。)  
+
+サンプル相槌音声：Voiced by https://coefont.studio  
