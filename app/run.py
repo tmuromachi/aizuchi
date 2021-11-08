@@ -67,14 +67,18 @@ def test_disconnect():
 @socketio.on('stt_result')
 def receive_transcript(stt_result):
     # 音声認識結果をクライアント側から受け取って整形/相槌判定を行う
+    global past_transcript
     wrap_transcript = text_wrapper(stt_result['data'], 30)
-    if jumanpp_parser(wrap_transcript):  # 相槌箇所であるかどうか
-        wrap_transcript = wrap_transcript + '<br><span style="color:#AAAAAA;">' + '【相槌可能】' + '</span>'
+    if jumanpp_parser(wrap_transcript):    # 相槌箇所であるかどうか
+        if stt_result != past_transcript:    # 発話内容を過去発話と比較
+            wrap_transcript = wrap_transcript + '<br><span style="color:#AAAAAA;">' + '【相槌可能】' + '</span>'
     print(wrap_transcript)
+    past_transcript = stt_result
     socketio.emit('jumanpp_parser', {'data': wrap_transcript, 'count': 0})
 
 
 if __name__ == '__main__':
+    past_transcript = ""
     # SocketIOサーバをデバッグモードで起動
     # socketio.run(app, debug=True)
     socketio.run(app, host="0.0.0.0")
