@@ -1,25 +1,17 @@
-.original-button {
+.original-button,
+a.original-button{
     font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", sans-serif;
-    /*
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    */
-    line-height: 1;
-    text-decoration: none;
-    color: #ffffff;
     font-size: 18px;
-    border-radius: 5px;
     width: 120px;
     height: 30px;
-    font-weight: bold;
-    transition: 0.3s;
-    background-image: radial-gradient(circle at 100% 0%, rgba(94, 138, 243, 0.7) 15%, rgba(243, 61, 223, 0.7));
-
+    color: #fff;
+    /*background-color: #eb6100;*/
+    background-color: #000000;
     border: none;  /* 枠線を消す */
     outline: none; /* クリックしたときに表示される枠線を消す */
-  }
-  
-  .original-button:hover {
-    opacity: .5;
-  }
+}
+.original-button:hover,
+a.original-button:hover {
+  color: #fff;
+  background: #000000;
+}
