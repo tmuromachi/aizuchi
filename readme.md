@@ -33,5 +33,6 @@ Google Cloud Speech-to-Textを用いるブランチを動かす場合にはDocke
 Web Speech APIの使用は無料ですが、Google Cloud Speech-to-Textの使用は従量課金制です。  
 Google Cloud Speech-to-Textを使用する際にはGCP認証用jsonファイルをconfig以下などに設置し、
 `.env`の`GCP_KEY_PLACE`に絶対パスで認証用ファイルのパスを記述します。  
+macの場合は5000番portが使えないため、docker-compose.yml内のportを5001:5000等に変えて、 http://localhost:5001/ 等にアクセス先も変更してください。
 
 サンプル相槌音声：Voiced by https://coefont.studio  

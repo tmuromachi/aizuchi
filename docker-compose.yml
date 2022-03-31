@@ -7,8 +7,8 @@ services:    # サービスを定義する項目
     # image: python:3.7
     container_name: app-server
     hostname: app-server
-    # tty: trueと記述すると、docker-compose up でコンテナを起動させた際に、
-    #      コンテナがすぐに終了してしまうのを防ぐことができます。
+    # tty: true でdocker-compose up でコンテナを起動させた際に、
+    #      コンテナがすぐに終了してしまうのを防ぐ
     tty: true
     working_dir: /var/www/
     env_file:
@@ -20,5 +20,6 @@ services:    # サービスを定義する項目
       - ./app/:/var/www/
     ports:
       - 5000:5000
+      # - 5001:5000    # mac
       # - 3031:3031
       # - 3031:5000
